@@ -6,11 +6,11 @@ metadata:
   labels:
     deploymentName: dummy
 spec:
-  maxReplicaCount: 4
+  maxReplicaCount: 5
   pollingInterval: 3  # Optional. Default: 30 seconds
   cooldownPeriod:  5 # Optional. Default: 300 seconds
   scaleTargetRef:
-    name: dummy
+    name: dummy-mongo
   triggers:
     - type: mysql
       metadata:

@@ -1,10 +1,11 @@
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: dummy
+  name: dummy-mongo
   labels:
-    app: dummy
+    app: dummy-mongo
 spec:
+  replicas: 0
   selector:
     matchLabels:
       app: dummy
