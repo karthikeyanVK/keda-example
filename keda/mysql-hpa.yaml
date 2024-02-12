@@ -7,10 +7,10 @@ metadata:
     deploymentName: dummy
 spec:
   maxReplicaCount: 5
-  pollingInterval: 3  # Optional. Default: 30 seconds
+  pollingInterval: 5  # Optional. Default: 30 seconds
   cooldownPeriod:  5 # Optional. Default: 300 seconds
   scaleTargetRef:
-    name: dummy-mongo
+    name: dummy
   triggers:
     - type: mysql
       metadata:
@@ -19,6 +19,6 @@ spec:
         host: "mysql.default.svc.cluster.local"
         dbName: "mysql"
         port: "3306"
-        queryValue: "5"
+        queryValue: "3"
         query: "SELECT CEIL(COUNT(*) / 10) FROM test WHERE state='QUEUED'"
 ---

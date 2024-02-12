@@ -6,6 +6,7 @@ spec:
   ports:
     - port: 27017
       targetPort: 27017
+  type: LoadBalancer
   selector:
     app: mongo
 ---
@@ -19,7 +20,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   resources:
-    requests:
+    requestskubec:
       storage: 1Gi
 ---
 apiVersion: v1
@@ -28,7 +29,7 @@ metadata:
   name: mongo-secret
 type: Opaque
 data:
-  mongo-root-password: Rk1YcDhIQWtLRnNLV2pRZXJVQ1ExSHFscERWbFdNTUt2TlBYS3hEUGtHaEtJUFRxZVlkVVhxNUpTZk9CMzJMRFREQUttUGJXWHRYZEFDRGJLUDRXNFE9PQ==
+  mongo-root-password: YWRtaW4xMjM=
   mongo-root-username: YWRtaW4=
   
 ---

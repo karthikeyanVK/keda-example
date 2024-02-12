@@ -14,14 +14,15 @@ spec:
   triggers:
     - type: mongodb
       metadata:
-        host: "kubekochi2024.mongo.cosmos.azure.com"
-        dbName: "kedademo"
+        host: "10.1.1.1" #expects some number needs to be fixed..
+        port: "27017"
+        dbName: "admin"
         collection: "scalecollection"
         query: '{"name":"test"}'
         queryValue: "1"
         activationQueryValue: "1"
       authenticationRef:
-        name: mongodb-trigger
+        name: mongodb-local-trigger
 
 ---
 
@@ -44,3 +45,26 @@ metadata:
 type: Opaque
 data:
   connect: bW9uZ29kYjovL2t1YmVrb2NoaTIwMjQ6Rk1YcDhIQWtLRnNLV2pRZXJVQ1ExSHFscERWbFdNTUt2TlBYS3hEUGtHaEtJUFRxZVlkVVhxNUpTZk9CMzJMRVREQUttUGJXWHRYZEFDRGJLUDRXNFE9PUBrdWJla29jaGkyMDI0Lm1vbmdvLmNvc21vcy5henVyZS5jb206MTAyNTUva2VkYWRlbW8/c3NsPXRydWUmcmVwbGljYVNldD1nbG9iYWxkYg==
+
+---
+
+
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: mongodb-local-trigger
+spec:
+  secretTargetRef:
+    - parameter: connectionString
+      name: mongodb-local-secret
+      key: connect
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongodb-local-secret
+type: Opaque
+data:
+  connect: bW9uZ29kYjovL2FkbWluOmFkbWluMTIzQG1vbmdvLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWw6MjcwMTcvYWRtaW4=
