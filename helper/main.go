@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/urfave/cli"
 	"log"
 	"os"
+
+	"github.com/urfave/cli"
 )
 
 func main() {
@@ -62,16 +63,16 @@ func main() {
 					},
 				},
 			},
+			//add subcommand for mongo
 			{
 				Name:  "mongo",
 				Usage: "mongo methods",
 				Subcommands: []cli.Command{
 					{
 						Name:  "insert",
-						Usage: "Insert some values to mongo database",
-						fmt.Println("started mongo access")
+						Usage: "Insert some values to database",
 						Action: func(c *cli.Context) error {
-							err := Insert()
+							err := InsertMongoData()
 							if err != nil {
 								fmt.Println("Failed to insert values")
 								log.Fatal(err)
@@ -85,7 +86,7 @@ func main() {
 						Name:  "delete",
 						Usage: "Delete all records from database",
 						Action: func(c *cli.Context) error {
-							err := Delete()
+							err := DeleteMongoData()
 							if err != nil {
 								fmt.Println("Failed to delete records")
 								log.Fatal(err)

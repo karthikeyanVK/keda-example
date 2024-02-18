@@ -34,7 +34,7 @@ spec:
       containers:
         - name: master
           image: kubeacrchennai.azurecr.io/local/app:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           args:
             - app
           ports:
@@ -47,4 +47,4 @@ spec:
               value: "keda-talk"
           resources:
             limits:
-              cpu: "0.1"
+              cpu: "0.2"

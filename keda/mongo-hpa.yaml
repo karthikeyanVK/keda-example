@@ -7,7 +7,7 @@ metadata:
     deploymentName: dummy-mongo
 spec:
   maxReplicaCount: 5
-  pollingInterval: 3  # Optional. Default: 30 seconds
+  pollingInterval: 5  # Optional. Default: 30 seconds
   cooldownPeriod:  5 # Optional. Default: 300 seconds
   scaleTargetRef:
     name: dummy-mongo
@@ -19,7 +19,7 @@ spec:
         dbName: "admin"
         collection: "scalecollection"
         query: '{"name":"test"}'
-        queryValue: "1"
+        queryValue: "2"
         activationQueryValue: "1"
       authenticationRef:
         name: mongodb-local-trigger

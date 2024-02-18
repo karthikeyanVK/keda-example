@@ -2,67 +2,63 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"log"
 
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// Create MongoDB client
-func makeMongoClient() (*mongo.Client, error) {
+var collection *mongo.Collection
+var ctx = context.TODO()
 
-	// change the below line to your MongoDB connection string with username and password of kubernetes
-
-	clientOptions := options.Client().ApplyURI("mongodb://admin:admin123@mongo.default.svc.cluster.local:27017/admin")
-
-	// Connect to MongoDB
-	client, err := mongo.Connect(context.Background(), clientOptions)
+func init() {
+	fmt.Println("init called")
+	clientOptions := options.Client().ApplyURI("mongodb://admin:admin123@mongo.default.svc.cluster.local:27017/")
+	client, err := mongo.Connect(ctx, clientOptions)
+	fmt.Println("connection established")
 	if err != nil {
-		return nil, err
+		log.Fatal(err)
 	}
 
-	// Ping MongoDB to verify connection
-	err = client.Ping(context.Background(), nil)
+	err = client.Ping(ctx, nil)
 	if err != nil {
-		return nil, err
+		log.Fatal(err)
 	}
 
-	return client, nil
+	collection = client.Database("admin").Collection("scalecollection")
+	fmt.Println("collection initiated")
+}
+
+type TestData struct {
+	ID   primitive.ObjectID `bson:"_id"`
+	Name string             `bson:"name"`
 }
 
 // Insert documents into MongoDB collection
-func Insert() error {
-	client, err := makeMongoClient()
-	if err != nil {
-		return err
-	}
+func InsertMongoData() error {
 
-	// Access database and collection
-	db := client.Database("mydb")
-	collection := db.Collection("test")
-
-	// Insert multiple documents
-	docs := make([]interface{}, 100)
-	for i := range docs {
-		docs[i] = bson.M{"state": "QUEUED"}
+	fmt.Println("insertMongoData Called")
+	testData := &TestData{
+		ID:   primitive.NewObjectID(),
+		Name: "test",
 	}
-	_, err = collection.InsertMany(context.Background(), docs)
+	_, err := collection.InsertOne(ctx, testData)
+	fmt.Println("insertMongoData Inserted Data")
 	return err
 
 }
+func UpsertMongoData() error {
+	return nil
+}
 
 // Delete all documents from MongoDB collection
-func Delete() error {
-	client, err := makeMongoClient()
-	if err != nil {
-		return err
-	}
+func DeleteMongoData() error {
+	fmt.Println("deleteMongoData called")
+	// delete where name = "test"
+	_, err := collection.DeleteMany(ctx, bson.M{"name": "test"})
 
-	// Access database and collection
-	db := client.Database("mydb")
-	collection := db.Collection("test")
-
-	// Delete all documents
-	_, err = collection.DeleteMany(context.Background(), bson.M{})
 	return err
-
 }
