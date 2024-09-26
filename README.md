@@ -6,6 +6,8 @@ samples check https://github.com/kedacore/samples
 
 The included `helper` provides an easy way to perform both 0 -> n and n -> 0 scalings.  
 
+
+
 ## Create cluster
 The deployment consists of 4 components:
 - MySQL instance
@@ -19,6 +21,8 @@ kubectl apply -f deployment/
 ## Install KEDA
 Follow the official KEDA guide https://keda.sh/deploy/
 
+##Install kubernetes-dashboard
+Follow the official kubernetes dashboard guide https://artifacthub.io/packages/helm/k8s-dashboard/kubernetes-dashboard
 
 ## Observe
 To observe how everything works you can watch two things:
